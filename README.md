@@ -1,4 +1,10 @@
 
-remoteClient.html - HTML5/JS video feed and servo control interface.
+DEPRECATED-->remoteClient.html - HTML5/JS video feed
 
-This includes the good work from: https://github.com/phoboslab/jsmpeg.git
+tunnelcommands: connecting to rover
+
+TODO:
+
+-python-picamera preview with x window.
+-update servo/ecu control to use new servo controller
+-determine best UI for servo control
