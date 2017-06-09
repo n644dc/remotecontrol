@@ -1,10 +1,9 @@
 STEPS:
 
-1) Connect remote.control.box & rover (pi) to local wifi network.
-2) Start reverse tunnel ssh from rover
-3) ssh into tunnel
-4) start python camera control
-5) start server servo control
+1) Start reverse tunnel ssh from rover
+2) ssh into tunnel from remote.control.box
+3) start python camera control
+4) start server servo control
 
 REVERSE TUNNEL FOR ROVER
 
@@ -14,4 +13,4 @@ ssh -X -R 19992:localhost:22 root@remote.control.box
 
 
 FROM remote.control.box
-ssh pi@localhost -p 19992
+ssh =X pi@localhost -p 19992
