@@ -28,8 +28,7 @@ GPIO.setup(reverseLeft, GPIO.OUT)
 GPIO.setup(reverseRight, GPIO.OUT)
 
 def setPin(direction, toggle):
-    return
-#   GPIO.output(direction, toggle)
+    GPIO.output(direction, toggle)
 
 def forward():
     print("forward")
@@ -57,7 +56,6 @@ def stop():
     setPin(forwardRight,OFF)
     setPin(reverseLeft, OFF)
     setPin(reverseRight,OFF)
-    time.sleep(.2)
 
 def cleanup():
     print("bye")
@@ -108,7 +106,7 @@ while not done:
     if not events:
         end = time.time()
         elapsed = end - start
-        if elapsed > 0.5:
+        if elapsed > 0.05:
             if state is not "stop":
                 stop()
                 state = "stop"

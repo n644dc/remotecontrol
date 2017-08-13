@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>eBot v1.5.4</title>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>EBOT COMMAND STATION</h1>
+    <h4>Version 1.5.4</h4>
+    <hr>
+      Socket Status: <span id="status"></span>
+    <hr>
+
+	<div class="well">
+		Server Message: <span id="message"></span>
+	</div>
+  
+  <script>
+    var host = window.location.host;
+    var ws = new WebSocket('ws://'+host+'/ws');
+    var $status = $('#status');
+    var $message = $('#message');
+
+    ws.onopen = function(){
+      $status.attr("class", 'label label-success');
+      $status.text('open');
+    };
+    
+    ws.onmessage = function(ev){
+      $message.attr("class", 'label label-info');
+      $message.hide();
+      $message.fadeIn("slow");
+      $message.text('recieved message');
+
+      var json = JSON.parse(ev.data);
+    };
+    
+    ws.onclose = function(ev){
+      $status.attr("class", 'label label-important');
+      $status.text('closed');
+    };
+    ws.onerror = function(ev){
+      $status.attr("class", 'label label-warning');
+      $status.text('error occurred');
+    };
+
+  </script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 
 **DEV PLATFORM**
 
-* motor.py - Using pygame to control car via L298N controller. Key Input via pygame sets pins high and low for 4 directional travel.
-
+* motor.py - GPIO control of L298N controller. 
+* server.py - Tornado websocket server to interface with motor.py
+* index.html - HTML Websocket client that connects to the tornado websocket instance.
+* cvStream.py - Computer Vision utilization for camera interface. (WIP)
