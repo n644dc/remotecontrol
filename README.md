@@ -1,10 +1,5 @@
 
-DEPRECATED-->remoteClient.html - HTML5/JS video feed
+#DEV PLATFORM
 
-tunnelcommands: connecting to rover
+* motor.py - Using pygame to control car via L298N controller
 
-TODO:
-
--python-picamera preview with x window.
--update servo/ecu control to use new servo controller
--determine best UI for servo control
