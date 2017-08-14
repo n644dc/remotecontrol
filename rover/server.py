@@ -21,7 +21,9 @@ class SocketHandler(websocket.WebSocketHandler):
             cl.remove(self)
 
     def on_message(self, message):
-        print("Received:"+ message)
+        messageObject = json.loads(message)
+        print(messageObject['type'] + " - " + messageObject['value'])
+        
 
     def sendMsg(self, message):
          data = {"type": "server", "value" : message}
