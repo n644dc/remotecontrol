@@ -44,6 +44,7 @@
 	    	var ws = new WebSocket('ws://'+host+'/ws');
 	    	var $status = $('#status');
 	    	var $message = $('#message');
+		var lastMessage = null;
 
 		var exit    = '{"type" : "command", "value" : "exit"}';
 		var stop    = '{"type" : "direction", "value" : "stop"}';
@@ -80,24 +81,30 @@
 			ws.send(message);
 		};
 
+		message = function(msg) {
+			if (msg != lastMessage) {
+				send(msg);
+				lastMessage = msg;
+			}	
+		};
+
 		$(document).keyup(function(event) {
-			send(stop);
+			message(stop);
 		});
 
 		$(document).keydown(function(event) {
-			$message.text(event.keyCode);
 			switch(event.keyCode) {
 				case 87:
-					send(forward);
+					message(forward);
 					break;
 				case 83:
-					send(reverse);
+					message(reverse);
 					break;
 				case 65:
-					send(left);
+					message(left);
 					break;
 				case 68:
-					send(right);
+					message(right);
 					break;
 			}
 		});
@@ -105,29 +112,28 @@
 		$(".direction").mousedown(function(event) {
 			switch(event.toElement.value) {
 				case "forward":
-					send(forward);
+					message(forward);
 					break;
 				case "reverse":
-					send(reverse);
+					message(reverse);
 					break;
 				case "left":
-					send(left);
+					message(left);
 					break;
 				case "right":
-					send(right);
+					message(right);
 					break;
 				case "stop":
-					send(stop);
+					message(stop);
 					break;
 				case "exit":
-					send(exit);
+					message(exit);
 					break;
 			}
 		});
 
 		$(".direction").mouseup(function(event) {
-			send(stop);
-			$message.text("STOP");
+			message(stop);
 		});
 	
 	</script>

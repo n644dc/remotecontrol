@@ -1,7 +1,16 @@
 from tornado import websocket, web, ioloop
 import json
+import motor
 
 cl = []
+
+commands = {"left": motor.left,
+           "right": motor.right,
+           "forward": motor.forward,
+           "reverse": motor.reverse,
+           "stop": motor.stop,
+           "exit": motor.cleanup
+}
 
 class IndexHandler(web.RequestHandler):
     def get(self):
@@ -22,15 +31,16 @@ class SocketHandler(websocket.WebSocketHandler):
 
     def on_message(self, message):
         messageObject = json.loads(message)
-        print(messageObject['type'] + " - " + messageObject['value'])
-        
 
+        if messageObject['type'] == "command":
+            print("command")
+        elif messageObject['type'] == "direction":
+            commands[messageObject['value']]()
+        
     def sendMsg(self, message):
          data = {"type": "server", "value" : message}
          self.write_message(data)
          
-        
-
 app = web.Application([
     (r'/', IndexHandler),
     (r'/ws', SocketHandler)

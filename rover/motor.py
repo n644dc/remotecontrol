@@ -5,7 +5,6 @@
 import sys
 import time
 import RPi.GPIO as GPIO
-import pygame
 
 GPIO.cleanup()
 GPIO.setmode(GPIO.BCM)
@@ -60,61 +59,5 @@ def stop():
 def cleanup():
     print("bye")
     GPIO.cleanup()
-    return "done"
+    exit()
 
-def setDirection(key, state):
-    if key==pygame.K_w:
-        if state is not "forward":
-            forward()
-            state = "forward"
-
-    elif key==pygame.K_a:
-        if state is not "left":
-            left()
-            state = "left"
-
-    elif key==pygame.K_s:
-        if state is not "reverse":
-            reverse()
-            state = "reverse"
-
-    elif key==pygame.K_d:
-        if state is not "right":
-            right()
-            state = "right"
-    elif key==pygame.K_ESCAPE:
-        state = cleanup()
-        
-    return state
-
-
-pygame.init()
-pygame.display.set_mode((100,100))
-
-done=False
-state="stop"
-directions = [pygame.K_d, pygame.K_s, pygame.K_a, pygame.K_w]
-
-start = time.time()
-end = time.time()
-
-print(directions)
-
-
-while not done:
-    events = pygame.event.get()
-    if not events:
-        end = time.time()
-        elapsed = end - start
-        if elapsed > 0.05:
-            if state is not "stop":
-                stop()
-                state = "stop"
-    else:
-        for event in events:
-            if event.type == pygame.KEYDOWN:
-                state = setDirection(event.key, state)
-                break
-        start = time.time()
-    
-exit()
