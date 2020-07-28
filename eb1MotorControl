@@ -1,1 +1,93 @@
 
+# Python Script
+# https://www.electronicshub.org/raspberry-pi-l298n-interface-tutorial-control-dc-motor-l298n-raspberry-pi/
+
+import RPi.GPIO as GPIO          
+from time import sleep
+
+input1  = 24 #GPIO BCM 24
+input2  = 23 #GPIO BCM 23
+enabled = 25 #GPIO BCM 25
+
+GPIO.setmode(GPIO.BCM) #set pins to BCM
+
+# INIT PINS
+GPIO.setup(input1,GPIO.OUT)
+GPIO.setup(input2,GPIO.OUT)
+GPIO.setup(enabled,GPIO.OUT)
+
+# SET PINS TO DEFAULT
+GPIO.output(input1,GPIO.LOW)
+GPIO.output(input2,GPIO.LOW)
+
+# POWER
+power=GPIO.PWM(enabled,1000)
+power.start(50) # Set initial duty to 'low' minimum speed for engine. 
+
+print("\n")
+print("The default speed & direction of motor is LOW & Forward.....")
+print("s-stop f-forward r-reverse l-low m-medium h-high e-exit")
+print("\n")
+
+
+def mStop():
+    print("stop")
+    GPIO.output(input1,GPIO.LOW)
+    GPIO.output(input2,GPIO.LOW)
+
+def mForward():
+    print("forward")
+    GPIO.output(input1,GPIO.HIGH)
+    GPIO.output(input2,GPIO.LOW)
+
+def mReverse():
+    print("reverse")
+    GPIO.output(input1,GPIO.LOW)
+    GPIO.output(input2,GPIO.HIGH)
+
+def powerLow():
+    power.ChangeDutyCycle(50)
+
+def powerMedium():
+    power.ChangeDutyCycle(75)
+
+def powerHigh():
+    power.ChangeDutyCycle(100)
+
+def exitM():
+    mStop()
+    GPIO.cleanup()
+
+while(1):
+
+    userIn = raw_input()
+    
+    if userIn == 's':
+        mStop()
+        continue
+
+    if userIn == 'f':
+        mForward()
+        continue
+
+    if userIn == 'r':
+        mReverse()
+        continue
+
+    if userIn == 'l':
+        powerLow()
+        continue
+
+    if userIn == 'm':
+        powerMedium()
+        continue
+
+    if userIn == 'h':
+        powerHigh()
+        continue
+    
+    if userIn == 'e':
+        exitM()
+        continue
+
+    print("Invalid Input. Try again.")
